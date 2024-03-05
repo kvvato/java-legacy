@@ -34,6 +34,7 @@ nbproject/private/
 *.tmp
 tmp*
 log*
+!Login.java
 /.externalToolBuilders
 /.settings
 /test-output

@@ -11,12 +11,7 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import javax.annotation.Nullable;
-
 import org.molgenis.io.csv.CsvReader;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Iterators;
 
 public class ZipTableReader implements TableReader
 {
@@ -45,23 +40,15 @@ public class ZipTableReader implements TableReader
 	@Override
 	public Iterator<TupleReader> iterator()
 	{
-		return Iterators.transform(tableNameMap.values().iterator(), new Function<ZipEntry, TupleReader>()
-		{
-			@Override
-			@Nullable
-			public TupleReader apply(@Nullable
-			ZipEntry zipEntry)
-			{
-				try
-				{
-					return toTupleReader(zipEntry);
-				}
-				catch (IOException e)
-				{
-					throw new RuntimeException(e);
-				}
-			}
-		});
+		return tableNameMap.values().stream()
+				.map((z) -> {
+					try {
+						return toTupleReader(z);
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				})
+				.iterator();
 	}
 
 	@Override

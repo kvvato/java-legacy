@@ -3,8 +3,7 @@ package org.molgenis.framework.tupletable.view.renderers;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
-
-import javax.annotation.Nullable;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
 import org.molgenis.framework.tupletable.TableException;
@@ -13,9 +12,6 @@ import org.molgenis.io.csv.CsvWriter;
 import org.molgenis.model.elements.Field;
 import org.molgenis.util.tuple.AbstractTuple;
 import org.molgenis.util.tuple.Tuple;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
 
 /**
  * Export TupleTable to CSV file
@@ -83,16 +79,9 @@ public class CsvExporter extends AbstractExporter
 		@Override
 		public Iterable<String> getColNames()
 		{
-			return Iterables.transform(fields, new Function<Field, String>()
-			{
-				@Override
-				@Nullable
-				public String apply(@Nullable
-				Field arg0)
-				{
-					return arg0 != null ? arg0.getSqlName() : null;
-				}
-			});
+			return fields.stream()
+					.map((f) -> f != null ? f.getSqlName() : null)
+					.collect(Collectors.toList());
 		}
 
 		@Override

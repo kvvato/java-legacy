@@ -3,19 +3,14 @@ package org.molgenis.framework.tupletable.view.renderers;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Iterator;
-
-import javax.annotation.Nullable;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
 import org.molgenis.framework.tupletable.TableException;
 import org.molgenis.framework.tupletable.TupleTable;
 import org.molgenis.io.TupleWriter;
 import org.molgenis.io.excel.ExcelWriter;
-import org.molgenis.model.elements.Field;
 import org.molgenis.util.tuple.Tuple;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
 
 /**
  * Export TupleTable to Excel workbook
@@ -49,16 +44,9 @@ public class ExcelExporter extends AbstractExporter
 			try
 			{
 				// write header row
-				tupleWriter.writeColNames(Iterables.transform(tupleTable.getColumns(), new Function<Field, String>()
-				{
-					@Override
-					@Nullable
-					public String apply(@Nullable
-					Field field)
-					{
-						return field != null ? field.getName() : null;
-					}
-				}));
+				tupleWriter.writeColNames(tupleTable.getColumns().stream()
+						.map((f) -> f != null ? f.getName() : null)
+						.collect(Collectors.toList()));
 
 				// write rows
 				for (Iterator<Tuple> it = tupleTable.iterator(); it.hasNext();)

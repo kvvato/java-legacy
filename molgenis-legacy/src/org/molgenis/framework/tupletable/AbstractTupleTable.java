@@ -1,17 +1,14 @@
 package org.molgenis.framework.tupletable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.molgenis.model.elements.Field;
 import org.molgenis.util.tuple.Tuple;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 
 public abstract class AbstractTupleTable implements TupleTable
 {
@@ -80,17 +77,9 @@ public abstract class AbstractTupleTable implements TupleTable
 	{
 		try
 		{
-			Collection<Field> hiddenColumns = Collections2.filter(getAllColumns(), new Predicate<Field>()
-			{
-				@Override
-				public boolean apply(Field f)
-				{
-					return f.isHidden();
-				}
-
-			});
-
-			return new ArrayList<Field>(hiddenColumns);
+			return getAllColumns().stream()
+					.filter(Field::isHidden)
+					.collect(Collectors.toList());
 		}
 		catch (TableException e)
 		{

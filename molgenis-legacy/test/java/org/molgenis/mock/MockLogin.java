@@ -86,12 +86,6 @@ public class MockLogin implements Login
 	}
 
 	@Override
-	public boolean canRead(Class<? extends Entity> entityClass) throws DatabaseException
-	{
-		return true;
-	}
-
-	@Override
 	public boolean canRead(Entity entity) throws DatabaseException
 	{
 		// TODO Auto-generated method stub
