@@ -39,3 +39,6 @@ log*
 /.settings
 /test-output
 /target/
+/WebContent/
+/generated/
+!/generated/test/

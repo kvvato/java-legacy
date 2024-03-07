@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<molgenis name="addressbook">
+    <entity name="Contact">
+        <field name="contact_id" type="autoid"/>
+        <field name="firstname" nillable="true"/>
+        <field name="midinitials" nillable="true"/>
+        <field name="lastname" nillable="true"/>
+    </entity>
+</molgenis>
